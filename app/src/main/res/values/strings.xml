@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Employee Directory</string>
+    <string name="response_empty">No Results Returned</string>
+    <string name="response_failure">There was an error getting the information</string>
 </resources>

@@ -12,14 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/employeeImage"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/name"
@@ -28,7 +29,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="15dp"
             tools:text="Name"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/employeeImage"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -40,7 +41,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="15dp"
             tools:text="Team"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/employeeImage"
             app:layout_constraintTop_toBottomOf="@id/name"/>
@@ -52,7 +53,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="15dp"
             tools:text="Phone Number"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/employeeImage"
             app:layout_constraintTop_toBottomOf="@id/team"/>
@@ -64,7 +65,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="15dp"
             tools:text="Email Address"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/employeeImage"
             app:layout_constraintTop_toBottomOf="@id/phoneNumber"/>

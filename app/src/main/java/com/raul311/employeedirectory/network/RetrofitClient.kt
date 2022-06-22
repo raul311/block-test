@@ -8,7 +8,8 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
-    private const val TIME_OUT: Long = 120
+    private const val TIME_OUT: Long = 30
+    private const val BASE_URL: String = "https://s3.amazonaws.com/"
 
     private val gson = GsonBuilder().setLenient().create()
 
@@ -22,7 +23,7 @@ object RetrofitClient {
                     val myJson = resp.peekBody(2048).string() // peekBody() will not close the response
                     println(myJson)
                 } catch (e: Exception) {
-                    println("Error parse json from intercept..............")
+                    println("Error Parsing data ${e.message}")
                 }
             } else {
                 println(resp)
@@ -33,7 +34,7 @@ object RetrofitClient {
     val retrofit: ApiInterface by lazy {
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl("https://s3.amazonaws.com/")
+            .baseUrl(BASE_URL)
             .client(okHttpClient)
             .build().create(ApiInterface::class.java)
     }

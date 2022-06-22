@@ -2,7 +2,6 @@ package com.raul311.employeedirectory.models
 
 import com.google.gson.annotations.SerializedName
 
-
 data class Employee (
 
   @SerializedName("uuid"            ) var uuid          : String? = null,

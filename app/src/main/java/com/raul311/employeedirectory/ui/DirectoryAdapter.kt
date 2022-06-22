@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.raul311.employeedirectory.R
 import com.raul311.employeedirectory.models.Employee
 
@@ -24,16 +23,15 @@ class DirectoryAdapter(private val employeeList: List<Employee>) : RecyclerView.
 
         val itemsViewModel = employeeList[position]
 
-//        holder.imageView.setImageResource(ItemsViewModel.photoUrlLarge)
-        Glide.with(holder.imageView)
-            .load(itemsViewModel.photoUrlLarge)
-            .into(holder.imageView)
-
         holder.nameView.text = itemsViewModel.fullName
         holder.teamView.text = itemsViewModel.team
         holder.phoneView.text = itemsViewModel.phoneNumber
         holder.emailView.text = itemsViewModel.emailAddress
 
+        Glide
+            .with(holder.imageView)
+            .load(itemsViewModel.photoUrlLarge)
+            .into(holder.imageView)
     }
 
     override fun getItemCount(): Int = employeeList.size

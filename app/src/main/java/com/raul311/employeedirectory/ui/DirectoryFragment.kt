@@ -2,10 +2,12 @@ package com.raul311.employeedirectory.ui
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +23,8 @@ class DirectoryFragment : Fragment() {
     private lateinit var recyclerview: RecyclerView
     private lateinit var adapter: DirectoryAdapter
     private lateinit var swipeContainer: SwipeRefreshLayout
+    private lateinit var noResults: TextView
+    private lateinit var failure: TextView
 
     companion object {
         fun newInstance() = DirectoryFragment()
@@ -47,37 +51,54 @@ class DirectoryFragment : Fragment() {
         recyclerview = activity?.findViewById(R.id.recyclerview)!!
         recyclerview.layoutManager = LinearLayoutManager(activity)
 
-        swipeContainer = activity?.findViewById(R.id.swipeContainer)!!
-        swipeContainer.setOnRefreshListener { // Your code to refresh the list here.
-            // Make sure you call swipeContainer.setRefreshing(false)
-            // once the network request has completed successfully.
-            getEmployeeList()
-        }
-        getEmployeeList()
+        noResults = activity?.findViewById(R.id.noResults)!!
+        failure = activity?.findViewById(R.id.failure)!!
 
+        swipeContainer = activity?.findViewById(R.id.swipeContainer)!!
+        swipeContainer.setOnRefreshListener { getEmployeeList() }
+        getEmployeeList()
     }
 
     private fun getEmployeeList() {
         lifecycleScope.launch {
             viewModel.employeeListState.collect {
+                swipeContainer.isRefreshing = false
                 when(it) {
-                    is ApiState.Loading -> {
-
-                    }
                     is ApiState.Empty -> {
-
+                        setViewsOnEmpty()
                     }
                     is ApiState.Failure -> {
-
+                        setViewsOnFailure()
                     }
                     is ApiState.Success -> {
                         println("raul - size = ${it.data.employees.size}")
                         adapter = DirectoryAdapter(it.data.employees)
                         recyclerview.adapter = adapter
-                        swipeContainer.isRefreshing = false
+                        setViewsOnSuccess()
+                    }
+                    else -> { // Loading state
+                        swipeContainer.isRefreshing = true
                     }
                 }
             }
         }
+    }
+
+    private fun setViewsOnFailure() {
+        noResults.visibility = View.GONE
+        recyclerview.visibility = View.GONE
+        failure.visibility = View.VISIBLE
+    }
+
+    private fun setViewsOnSuccess() {
+        recyclerview.visibility = View.VISIBLE
+        noResults.visibility = View.GONE
+        failure.visibility = View.GONE
+    }
+
+    private fun setViewsOnEmpty() {
+        recyclerview.visibility = View.GONE
+        noResults.visibility = View.VISIBLE
+        failure.visibility = View.GONE
     }
 }
